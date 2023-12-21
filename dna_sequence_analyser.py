@@ -15,27 +15,18 @@ def get_sequence(accession_number):
     return record.seq
 
 
-def presence_of_ggctat(records):
-    """Look for the presence of GGCTAT in the DNA sequence"""
-    for record in records:
-        genetic_marker = "GGCTAT"
-        if genetic_marker in record:
-            print(f"Genetic marker found: {genetic_marker}.")
-        else:
-            print(f"Genetic marker {genetic_marker} not found.")
-
-
-def presence_of_tgcgcc(records):
-    """Look for the presence of TGCGCC in the DNA sequence"""
-    for record in records:
-        genetic_marker = "TGCGCC"
-        if genetic_marker in record:
-            print(f"Genetic marker found: {genetic_marker}.")
-        else:
-            print(f"Genetic marker {genetic_marker} not found.")
+def find_genetic_markers(sequence, markers):
+    found_markers = []
+    for marker in markers:
+        if marker in sequence:
+            found_markers.append(marker)
+    return found_markers
 
 
 email = os.environ.get("MY_EMAIL")
+
+genetic_markers = ["ATCGA", "CAGT", "GGCT", "TACGA"]
+
 
 # Samples with INS gene
 record1 = get_sequence("OM489474")
@@ -46,8 +37,10 @@ record5 = get_sequence("MT335692")
 
 ins_gene_records = [record1, record2, record3, record4, record5]
 print("Results from DNA samples with INS gene:")
-presence_of_ggctat(ins_gene_records)
-presence_of_tgcgcc(ins_gene_records)
+for item in ins_gene_records:
+    markers_found = find_genetic_markers(item, genetic_markers)
+    print("Genetic Markers Found:", markers_found)
+
 
 # Samples with APOE gene
 record6 = get_sequence("KJ905144")
@@ -58,8 +51,10 @@ record10 = get_sequence("DQ286969")
 
 apoe_gene_records = [record6, record7, record8, record9, record10]
 print("\nResults from DNA samples with APOE gene:")
-presence_of_ggctat(apoe_gene_records)
-presence_of_tgcgcc(apoe_gene_records)
+for item in apoe_gene_records:
+    markers_found = find_genetic_markers(item, genetic_markers)
+    print("Genetic Markers Found:", markers_found)
+
 
 # Samples with MYH7 gene
 record11 = get_sequence("MF399812")
@@ -70,5 +65,6 @@ record15 = get_sequence("EF560725")
 
 myh7_gene_records = [record11, record12, record13, record14, record15]
 print("\nResults from DNA samples with MYH7 gene:")
-presence_of_ggctat(myh7_gene_records)
-presence_of_tgcgcc(myh7_gene_records)
+for item in myh7_gene_records:
+    markers_found = find_genetic_markers(item, genetic_markers)
+    print("Genetic Markers Found:", markers_found)
